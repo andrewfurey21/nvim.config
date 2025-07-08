@@ -31,6 +31,59 @@ vim.g.have_nerd_font = false
 vim.opt.number = true
 vim.opt.relativenumber = true
 
+-- For indentation
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'python',
+  callback = function()
+    vim.opt_local.tabstop = 4
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.expandtab = true
+  end,
+})
+
+-- vim.api.nvim_create_autocmd('FileType', {
+--   pattern = 'c',
+--   callback = function()
+--     vim.opt_local.tabstop = 2
+--     vim.opt_local.shiftwidth = 2
+--     vim.opt_local.expandtab = true
+--   end,
+-- })
+--
+-- vim.api.nvim_create_autocmd('FileType', {
+--   pattern = 'cpp',
+--   callback = function()
+--     vim.opt_local.tabstop = 2
+--     vim.opt_local.shiftwidth = 2
+--     vim.opt_local.expandtab = true
+--   end,
+-- })
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'cpp', 'c', 'hpp', 'h' },
+  callback = function()
+    vim.opt_local.tabstop = 2
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.expandtab = true
+  end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'lua',
+  callback = function()
+    vim.opt_local.tabstop = 2
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.expandtab = true
+  end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = '*',
+  callback = function()
+    vim.opt_local.formatoptions:remove { 'c', 'r', 'o' }
+  end,
+})
+
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
 
@@ -70,7 +123,7 @@ vim.opt.splitbelow = true
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = { tab = '  ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
@@ -123,6 +176,16 @@ vim.keymap.set('n', '<leader>wk', '<c-w>k')
 vim.keymap.set('n', '<leader>wq', '<c-w>q')
 vim.keymap.set('n', '<leader>[', '<c-w>10<')
 vim.keymap.set('n', '<leader>]', '<c-w>10>')
+
+local diagnostics_active = true
+vim.keymap.set('n', '<leader>lsp', function()
+  diagnostics_active = not diagnostics_active
+  if diagnostics_active then
+    vim.diagnostic.show()
+  else
+    vim.diagnostic.hide()
+  end
+end)
 
 -- Autocommands, look at ":help lua-guide-autocommands"
 
