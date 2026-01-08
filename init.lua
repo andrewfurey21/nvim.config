@@ -236,7 +236,9 @@ require('lazy').setup({
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     config = function() -- This is the function that runs, AFTER loading
-      require('which-key').setup()
+      require('which-key').setup({
+        notify = false,
+      })
 
       -- Document existing key chains
       require('which-key').register {
@@ -458,8 +460,6 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         clangd = {},
-        gopls = {},
-        pyright = {},
         rust_analyzer = {},
         lua_ls = {
           -- cmd = {...},
@@ -736,7 +736,7 @@ require('lazy').setup({
       -- Prefer git instead of curl in order to improve connectivity in some environments
       require('nvim-treesitter.install').prefer_git = true
       ---@diagnostic disable-next-line: missing-fields
-      require('nvim-treesitter.configs').setup(opts)
+      require('nvim-treesitter.config').setup(opts)
 
       -- There are additional nvim-treesitter modules that you can use to interact
       -- with nvim-treesitter. You should go explore a few and see what interests you:
@@ -791,7 +791,7 @@ require('lazy').setup({
   },
 })
 
-require('nvim-treesitter.configs').setup {
+require('nvim-treesitter.config').setup {
   highlight = {
     enable = true,
     disable = function(lang, buf)
